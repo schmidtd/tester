@@ -25,7 +25,7 @@ jobs:
             echo "This is a release branch"
             VERSION=`echo ${{ github.ref_name }} | awk -F"-" '{print $2}'`
             echo "Version is:" $VERSION
-            BUILDREF='./tools/config/buildref-AAP_$VERSION.json'
+            BUILDREF='./tools/config/buildref-AAP_'$VERSION'.json'
           else
             echo "This is a main branch"
             BUILDREF='./tools/config/buildref-AAP_2.3.json'
