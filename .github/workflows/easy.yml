@@ -17,9 +17,6 @@ on:
         required: true
         default: './tools/config/buildref-AAP_2.3.json'
   
-env:
-  PUSH_MAIN_BUILDREF='./tools/config/buildref-AAP_2.3.json'
-
 jobs:
   easy:
     runs-on: ubuntu-latest
@@ -27,6 +24,9 @@ jobs:
     permissions:
       id-token: write
       contents: read
+
+    env:
+      PUSH_MAIN_BUILDREF='./tools/config/buildref-AAP_2.3.json'
 
     steps:
       # Establish snapshot datestamp
