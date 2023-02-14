@@ -14,7 +14,7 @@ on:
     inputs:
       manifest_file:
         description: 'Path to AAP manifest file'
-        required: ${{ env.PUSH_TRUE }}
+        required: true
         default: './manifests/AAP_2.3-2023-01-31.json'
       buildref:
         description: 'Path to build reference file'
