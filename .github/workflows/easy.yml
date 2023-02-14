@@ -5,7 +5,13 @@ name: Easy Button
 on:
   push:
     branches: [ dls*, main, release-* ]
+
   workflow_dispatch:
+    inputs:
+      manifest_file:
+        description: 'Path to AAP manifest file'
+        required: true
+        default: './manifests/AAP_2.3-2023-01-31.json'
   
 jobs:
   easy:
@@ -20,9 +26,8 @@ jobs:
       - name: Create snapshot datestamp and output parameters
         run: |
           echo "Branch: ${{ github.ref_name }}"
-          echo "Event: $GITHUB_EVENT_NAME"
           echo "Event: ${{ github.event_name }}"
-          # default: './tools/config/buildref-AAP_2.3.json'
+          echo "Manifest File: ${{ github.event.inputs.manifest_file }}"
           if [[ ${{ github.ref_name }} == release-* ]] ; 
           then 
             echo "This is a release branch"
