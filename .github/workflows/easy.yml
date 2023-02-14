@@ -6,6 +6,9 @@ on:
   push:
     branches: [ dls*, main, release-* ]
 
+  env:
+    PUSH_MAIN_BUILDREF: './tools/config/buildref-AAP_2.3.json'
+
   workflow_dispatch:
     inputs:
       manifest_file:
@@ -24,9 +27,6 @@ jobs:
     permissions:
       id-token: write
       contents: read
-
-    env:
-      PUSH_MAIN_BUILDREF='./tools/config/buildref-AAP_2.3.json'
 
     steps:
       # Establish snapshot datestamp
