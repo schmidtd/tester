@@ -20,7 +20,7 @@ jobs:
       - name: Create snapshot datestamp and output parameters
         run: |
           echo "Branch: ${{ github.ref_name }}"
-          echo "Event: ${{ GITHUB_EVENT_NAME }}"
+          echo "Event: $GITHUB_EVENT_NAME"
           echo "Event: ${{ github.event_name }}"
           # default: './tools/config/buildref-AAP_2.3.json'
           if [[ ${{ github.ref_name }} == release-* ]] ; 
