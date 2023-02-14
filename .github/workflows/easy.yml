@@ -58,25 +58,6 @@ jobs:
       - name: 'Checkout Repository'
         uses: actions/checkout@v3
 
-      - name: 'Checkout artifact repo'
-        uses: actions/checkout@v3
-        with:
-          repository: ansible/aoc-artifacts
-          ref: main
-          path: ./artifacts
-          token: ${{ secrets.GH_TOKEN }}
-
-      - name: 'Groom the artifact repo'
-        env:
-          ARTIFACT_BRANCH: ${{ needs.build-prep.outputs.artifact_branch }}
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
-        run: |
-          cd artifacts
-          git pull
-          git branch -a
-          git status
-          cd ..
-
       - name: Store back to this repo
         run: |
           mkdir -p test
