@@ -12,6 +12,10 @@ on:
         description: 'Path to AAP manifest file'
         required: true
         default: './manifests/AAP_2.3-2023-01-31.json'
+      buildref:
+        description: 'Path to build reference file'
+        required: true
+        default: './tools/config/buildref-AAP_2.3.json'
   
 jobs:
   easy:
@@ -28,17 +32,18 @@ jobs:
           echo "Branch: ${{ github.ref_name }}"
           echo "Event: ${{ github.event_name }}"
           echo "Manifest File: ${{ github.event.inputs.manifest_file }}"
+          echo "Default Build Reference File: ${{ github.event.inputs.buildref }}"
           if [[ ${{ github.ref_name }} == release-* ]] ; 
           then 
             echo "This is a release branch"
             VERSION=`echo ${{ github.ref_name }} | awk -F"-" '{print $2}'`
             echo "Version is:" $VERSION
             BUILDREF='./tools/config/buildref-AAP_'$VERSION'.json'
-            echo "BUILDREF=$BUILDREF" >> $GITHUB_ENV
           else
             echo "This is a main branch"
-            BUILDREF='./tools/config/buildref-AAP_2.3.json'
+            BUILDREF=${{ github.event.inputs.buildref }}
           fi
+          echo "BUILDREF=$BUILDREF" >> $GITHUB_ENV
           echo 'Build reference file is:' $BUILDREF
       - name: 'Do something else'
         run: |
