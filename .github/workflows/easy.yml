@@ -57,6 +57,8 @@ jobs:
 
       - name: 'Checkout Repository'
         uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.GH_TOKEN }}
 
       - name: Store back to this repo
         env:
