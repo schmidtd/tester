@@ -54,3 +54,37 @@ jobs:
         run: |
           echo 'Buildref 1:' $BUILDREF
           echo 'Buildref 2:' ${{ env.BUILDREF }}
+
+      - name: 'Checkout Repository'
+        uses: actions/checkout@v3
+
+      - name: 'Checkout artifact repo'
+        uses: actions/checkout@v3
+        with:
+          repository: ansible/aoc-artifacts
+          ref: main
+          path: ./artifacts
+          token: ${{ secrets.GH_TOKEN }}
+
+      - name: 'Groom the artifact repo'
+        env:
+          ARTIFACT_BRANCH: ${{ needs.build-prep.outputs.artifact_branch }}
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+        run: |
+          cd artifacts
+          git pull
+          git branch -a
+          git status
+          cd ..
+
+      - name: Store back to this repo
+        run: |
+          mkdir -p test
+          $(date +%Y-%m-%d-%H-%M-%S > test/bleah)
+          git config --global user.email "$(git log --format='%ae' HEAD^!)"
+          git config --global user.name "$(git log --format='%an' HEAD^!)"
+          git config pull.rebase false
+          git add -f test/bleah
+          git status
+          git commit -m "Commit $GITHUB_SHA [skip ci]"
+          git push --set-upstream origin ${{ github.ref_name }}
