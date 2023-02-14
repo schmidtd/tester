@@ -34,7 +34,7 @@ jobs:
           echo "Branch: ${{ github.ref_name }}"
           echo "Event: ${{ github.event_name }}"
           echo "Manifest File: ${{ github.event.inputs.manifest_file }}"
-          echo "Default Build Reference File: $PUSH_MAIN_BUILDREF
+          echo "Default Build Reference File:" $PUSH_MAIN_BUILDREF
           if [[ ${{ github.ref_name }} == release-* ]] ; 
           then 
             echo "This is a release branch"
