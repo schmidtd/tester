@@ -42,4 +42,5 @@ jobs:
           echo 'Build reference file is:' $BUILDREF
       - name: 'Do something else'
         run: |
-          echo 'Buildref:' $BUILDREF
+          echo 'Buildref 1:' $BUILDREF
+          echo 'Buildref 2:' ${{ env.BUILDREF }}
