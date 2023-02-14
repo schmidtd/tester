@@ -5,6 +5,8 @@ name: Easy Button
 on:
   push:
     branches: [ dls*, main, release-* ]
+    env:
+      PUSH_MAIN_BUILDREF='./tools/config/buildref-AAP_2.3.json'
 
   workflow_dispatch:
     inputs:
@@ -32,7 +34,7 @@ jobs:
           echo "Branch: ${{ github.ref_name }}"
           echo "Event: ${{ github.event_name }}"
           echo "Manifest File: ${{ github.event.inputs.manifest_file }}"
-          echo "Default Build Reference File: ${{ github.event.inputs.buildref }}"
+          echo "Default Build Reference File: $PUSH_MAIN_BUILDREF
           if [[ ${{ github.ref_name }} == release-* ]] ; 
           then 
             echo "This is a release branch"
@@ -41,10 +43,11 @@ jobs:
             BUILDREF='./tools/config/buildref-AAP_'$VERSION'.json'
           else
             echo "This is a main branch"
-            BUILDREF=${{ github.event.inputs.buildref }}
+            BUILDREF=$PUSH_MAIN_BUILDREF
           fi
           echo "BUILDREF=$BUILDREF" >> $GITHUB_ENV
           echo 'Build reference file is:' $BUILDREF
+
       - name: 'Do something else'
         run: |
           echo 'Buildref 1:' $BUILDREF
