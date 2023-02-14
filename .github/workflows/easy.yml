@@ -2,6 +2,10 @@
 
 name: Easy Button
 
+env:
+  PUSH_BUILDREF: './tools/config/buildref-AAP_2.3.json'
+  PUSH_TRUE: true
+
 on:
   push:
     branches: [ dls*, main, release-* ]
@@ -10,15 +14,12 @@ on:
     inputs:
       manifest_file:
         description: 'Path to AAP manifest file'
-        required: true
+        required: ${{ env.PUSH_TRUE }}
         default: './manifests/AAP_2.3-2023-01-31.json'
       buildref:
         description: 'Path to build reference file'
         required: true
         default: './tools/config/buildref-AAP_2.3.json'
-  
-env:
-  PUSH_MAIN_BUILDREF: './tools/config/buildref-AAP_2.3.json'
 
 jobs:
   easy:
@@ -35,7 +36,7 @@ jobs:
           echo "Branch: ${{ github.ref_name }}"
           echo "Event: ${{ github.event_name }}"
           echo "Manifest File: ${{ github.event.inputs.manifest_file }}"
-          echo "Default Build Reference File:" $PUSH_MAIN_BUILDREF
+          echo "Default Build Reference File:" $PUSH_BUILDREF
           if [[ ${{ github.ref_name }} == release-* ]] ; 
           then 
             echo "This is a release branch"
@@ -44,7 +45,7 @@ jobs:
             BUILDREF='./tools/config/buildref-AAP_'$VERSION'.json'
           else
             echo "This is a main branch"
-            BUILDREF=$PUSH_MAIN_BUILDREF
+            BUILDREF=$PUSH_BUILDREF
           fi
           echo "BUILDREF=$BUILDREF" >> $GITHUB_ENV
           echo 'Build reference file is:' $BUILDREF
