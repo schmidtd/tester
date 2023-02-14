@@ -23,7 +23,7 @@ jobs:
 
     steps:
       # Establish snapshot datestamp
-      - name: Create snapshot datestamp and output parameters
+      - name: 'Do something'
         run: |
           echo "Branch: ${{ github.ref_name }}"
           echo "Event: ${{ github.event_name }}"
@@ -34,8 +34,12 @@ jobs:
             VERSION=`echo ${{ github.ref_name }} | awk -F"-" '{print $2}'`
             echo "Version is:" $VERSION
             BUILDREF='./tools/config/buildref-AAP_'$VERSION'.json'
+            echo "BUILDREF=$BUILDREF" >> $GITHUB_ENV
           else
             echo "This is a main branch"
             BUILDREF='./tools/config/buildref-AAP_2.3.json'
           fi
           echo 'Build reference file is:' $BUILDREF
+      - name: 'Do something else'
+        run: |
+          echo 'Buildref:' $BUILDREF
