@@ -1,0 +1,33 @@
+---
+
+name: Build
+
+env:
+  GCP_IMAGE_FAMILY: redhat-aoc-gcp
+  BUILDREF: './tools/config/buildref-AAP_2.3.json'
+  MANIFEST_FILE: './manifests/2.3.20230221'
+  GCP_BUCKET: 'positronic-asimov'
+  GCP_BUCKET_MARKETPLACE: 'asimov-marketplace'
+
+on:
+  push:
+    branches: [ main, release-* ]
+
+jobs:
+  easy:
+    runs-on: ubuntu-latest
+    name: easy
+    permissions:
+      id-token: write
+      contents: read
+
+    steps:
+
+      - name: Store artifacts back to main repo
+        run: |
+          echo ${{ github.ref_name }}
+          if [[ ${{ github.ref_name }} .eq "main" ]]; then
+            echo main!
+          else
+            echo not main!
+          fi
