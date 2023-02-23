@@ -22,8 +22,7 @@ jobs:
       contents: read
 
     steps:
-
-      - name: Store artifacts back to main repo
+      - name: Run a test
         run: |
           echo ${{ github.ref_name }}
           if [[ ${{ github.ref_name }} .eq "main" ]]; then
