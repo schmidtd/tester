@@ -14,9 +14,9 @@ on:
     branches: [ main, release-* ]
 
 jobs:
-  easy:
+  tester:
     runs-on: ubuntu-latest
-    name: easy
+    name: tester
     permissions:
       id-token: write
       contents: read
@@ -25,7 +25,7 @@ jobs:
       - name: Run a test
         run: |
           echo ${{ github.ref_name }}
-          if [[ "${{ github.ref_name }}" .eq "main" ]]; then
+          if [[ "${{ github.ref_name }}" == "main" ]]; then
             echo main!
           else
             echo not main!
